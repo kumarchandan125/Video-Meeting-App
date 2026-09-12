@@ -1,4 +1,4 @@
-import { CheckLine, CopyIcon } from 'lucide-react'
+import { CheckLine, CopyIcon, MessageSquareIcon, MicIcon, MicOffIcon, PhoneOffIcon, UsersIcon, VideoIcon, VideoOffIcon } from 'lucide-react'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -30,15 +30,86 @@ const ControlBar = ({ roomId, audioEnabled, videoEnabled, onToggleAudio, onToggl
             <div className='flex items-center gap-3 mx-auto sm:mx-0'>
 
                 {/*Audio Toggle */}
+                <button onClick={onToggleAudio}
+                    className={`p-3.5 rounded-2xl transition-all cursor-pointer ${audioEnabled ? "bg-slate-100 hover:bg-slate-200 text-slate-800 botrder-slate-300 shadow-xs"
+                        : "bg-rose-50 hover:bg-rose-100 text-rose-600 border-rose-200 shadow-xs"}`}
+                    title={audioEnabled ? "Mute Microphone" : "unmute Microphone"}
+
+                >
+                    {audioEnabled ? <MicIcon className='w-5 h-5' /> : <MicOffIcon className='w-5 h-5' />}
+
+                </button>
+
+
                 {/*Vedio Toggle */}
+                <button onClick={onToggleVideo}
+                    className={`p-3.5 rounded-2xl transition-all cursor-pointer ${videoEnabled ? "bg-slate-100 hover:bg-slate-200 text-slate-800 botrder-slate-300 shadow-xs"
+                        : "bg-rose-50 hover:bg-rose-100 text-rose-600 border-rose-200 shadow-xs"}`}
+                    title={videoEnabled ? "Turn Off Camera" : "Turn On Camera"}
+
+                >
+                    {videoEnabled ? <VideoIcon className='w-5 h-5' /> : <VideoOffIcon className='w-5 h-5' />}
+
+                </button>
+
                 {/*Chat Toggle */}
+                <button onClick={onToggleChat}
+                    className={`p-3.5 rounded-2xl transition-all cursor-pointer ${isChatOpen ? "bg-blue-100 hover:bg-blue-200 text-slate-800 botrder-blue-200 shadow-xs"
+                        : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300 shadow-xs"}`}
+                    title="Toggle In-Meeting Chat"
+                >
+                    <MessageSquareIcon className='w-5 h-5' />
+                    {unreadCount > 0 && !isChatOpen && (
+                        <span className='absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-xs'>
+                            {unreadCount}
+                        </span>
+                    )}
+
+                </button>
                 {/*Participants Toggle */}
-                {/*Screen Share Toggle */}
-                
+                <button onClick={onToggleParticipants}
+                    className={`relative p-3.5 rounded-2xl transition-all cursor-pointer ${isParticipantsOpen ? "bg-blue-100 hover:bg-blue-200 text-slate-800 botrder-blue-200 shadow-xs"
+                        : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300 shadow-xs"}`}
+                    title="Toggle Participants List"
+                >
+                    <UsersIcon className='w-5 h-5' />
+
+                    <span className='absolute -top-1 -right-1 bg-slate-200 text-slate-800 text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-slate-300'>
+                        {participantsCount}
+                    </span>
+
+
+                </button>
+
+
+                {/*Leave / End Meeting Button */}
+                {isHost ? (
+                    <button onClick={onEndMeeting}
+                        className='p-3.5 rounded-2xl bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-500/25 transition-all cursor-pointer border border-red-500 ml-2 font-medium text-xs flex items-center gap-1.5'
+                        title='End Meeting For All'
+                    >
+                        <PhoneOffIcon className='w-5 h-5' />
+                        <span className='hidden md:inline'>End Meeting</span>
+
+                    </button>
+                ) : (
+                    <button onClick={onLeave}
+                        className='p-3.5 rounded-2xl bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-500/25 transition-all cursor-pointer border border-red-500 ml-2'
+                        title='Leave Meeting'
+                    >
+                        <PhoneOffIcon className='w-5 h-5' />
+                    </button>
+                )}
+
 
             </div>
 
             {/*Right placeholder */}
+            <div className='hidden sm:block w-32 text-right'>
+                <span className='font-medium text-slate-400'>
+                    Meeting Room
+                </span>
+            </div>
 
         </footer>
     )
