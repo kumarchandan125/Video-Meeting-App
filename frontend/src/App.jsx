@@ -21,7 +21,7 @@ const App = () => {
         <Route element={<ProtectedRoutes />}>
           <Route element={<ProtectedLayout />}>
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/session' element={<Sessions />} />
+            <Route path='/sessions' element={<Sessions />} />
             <Route path='/pricing' element={<Pricing />} />
 
           </Route>
